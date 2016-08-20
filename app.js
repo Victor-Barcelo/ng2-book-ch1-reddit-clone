@@ -11,7 +11,7 @@ System.register(["@angular/platform-browser-dynamic", "@angular/core"], function
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var platform_browser_dynamic_1, core_1;
-    var ArticleComponent, RedditApp;
+    var Article, ArticleComponent, RedditApp;
     return {
         setters:[
             function (platform_browser_dynamic_1_1) {
@@ -21,18 +21,30 @@ System.register(["@angular/platform-browser-dynamic", "@angular/core"], function
                 core_1 = core_1_1;
             }],
         execute: function() {
+            Article = (function () {
+                function Article(title, link, votes) {
+                    this.title = title;
+                    this.link = link;
+                    this.votes = votes || 0;
+                }
+                Article.prototype.voteUp = function () {
+                    this.votes += 1;
+                };
+                Article.prototype.voteDown = function () {
+                    this.votes -= 1;
+                };
+                return Article;
+            }());
             ArticleComponent = (function () {
                 function ArticleComponent() {
-                    this.title = 'Angular 2';
-                    this.link = 'http://angular.io';
-                    this.votes = 10;
+                    this.article = new Article('Angular 2', 'http://angular.io', 10);
                 }
                 ArticleComponent.prototype.voteUp = function () {
-                    this.votes += 1;
+                    this.article.voteUp();
                     return false;
                 };
                 ArticleComponent.prototype.voteDown = function () {
-                    this.votes -= 1;
+                    this.article.voteDown();
                     return false;
                 };
                 ArticleComponent = __decorate([
@@ -41,7 +53,7 @@ System.register(["@angular/platform-browser-dynamic", "@angular/core"], function
                         host: {
                             class: 'row'
                         },
-                        template: "\n<div class=\"four wide column center aligned votes\">\n    <div class=\"ui statistic\">\n        <div class=\"value\">\n            {{ votes }}\n        </div>\n        <div class=\"label\">\n            Points\n        </div>\n    </div>\n</div>\n<div class=\"twelve wide column\">\n    <a class=\"ui large header\" href=\"{{ link }}\">\n        {{ title }}\n    </a>\n    <ul class=\"ui big horizontal list voters\">\n        <li class=\"item\">\n            <a href (click)=\"voteUp()\">\n                <i class=\"arrow up icon\"></i>\n                upvote\n            </a>\n        </li>\n        <li class=\"item\">\n            <a href (click)=\"voteDown()\">\n                <i class=\"arrow down icon\"></i>\n                downvote\n            </a>\n        </li>\n    </ul>\n</div>\n"
+                        template: "\n<div class=\"four wide column center aligned votes\">\n    <div class=\"ui statistic\">\n        <div class=\"value\">\n            {{ article.votes }}\n        </div>\n        <div class=\"label\">\n            Points\n        </div>\n    </div>\n</div>\n<div class=\"twelve wide column\">\n    <a class=\"ui large header\" href=\"{{ link }}\">\n        {{ article.title }}\n    </a>\n    <ul class=\"ui big horizontal list voters\">\n        <li class=\"item\">\n            <a href (click)=\"voteUp()\">\n                <i class=\"arrow up icon\"></i>\n                upvote\n            </a>\n        </li>\n        <li class=\"item\">\n            <a href (click)=\"voteDown()\">\n                <i class=\"arrow down icon\"></i>\n                downvote\n            </a>\n        </li>\n    </ul>\n</div>\n"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], ArticleComponent);
@@ -57,7 +69,7 @@ System.register(["@angular/platform-browser-dynamic", "@angular/core"], function
                     core_1.Component({
                         selector: 'reddit',
                         directives: [ArticleComponent],
-                        template: "<form class=\"ui large form segment\">\n    <h3 class=\"ui header\">Add a Link</h3>\n    <div class=\"field\">\n        <label for=\"title\">Title:</label>\n        <input name=\"title\" #newtitle>\n    </div>\n    <div class=\"field\">\n        <label for=\"link\">Link:</label>\n        <input name=\"link\" #newlink>\n    </div>\n    <button (click)=\"addArticle(newtitle, newlink)\" class=\"ui positive right floated button\">\n        Submit link\n    </button>\n</form>\n<div class=\"ui grid posts\">\n    <reddit-article>\n    </reddit-article>\n</div>\n"
+                        template: "<form class=\"ui large form segment\">\n    <h3 class=\"ui header\">Add a Link</h3>\n    <div class=\"field\">\n        <label for=\"title\">Title:</label>\n        <input name=\"title\" #newtitle>\n    </div>\n    <div class=\"field\">\n        <label for=\"link\">Link:</label>\n        <input name=\"link\" #newlink>\n    </div>\n    <button (click)=\"addArticle(newtitle, newlink)\" class=\"ui positive right floated button\">\n        Submit link\n    </button>\n</form>\n<div class=\"ui grid posts\">\n    <reddit-article>\n    </reddit-article>\n\n</div>\n"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], RedditApp);
