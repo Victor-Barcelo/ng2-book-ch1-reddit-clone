@@ -61,6 +61,11 @@ System.register(["@angular/platform-browser-dynamic", "@angular/core"], function
             }());
             RedditApp = (function () {
                 function RedditApp() {
+                    this.articles = [
+                        new Article('Angular 2', 'http://angular.io', 3),
+                        new Article('Fullstack', 'http://fullstack.io', 2),
+                        new Article('Angular Homepage', 'http://angular.io', 1),
+                    ];
                 }
                 RedditApp.prototype.addArticle = function (title, link) {
                     console.log("Adding article title: " + title.value + " and link: " + link.value);

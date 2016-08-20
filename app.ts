@@ -12,10 +12,11 @@ class Article {
         this.votes = votes || 0;
     }
 
-    voteUp(): void {
+    voteUp():void {
         this.votes += 1;
     }
-    voteDown(): void {
+
+    voteDown():void {
         this.votes -= 1;
     }
 }
@@ -60,17 +61,18 @@ class Article {
 
 class ArticleComponent {
 
-    article: Article;
+    article:Article;
 
     constructor() {
-        this.article = new Article('Angular 2', 'http://angular.io', 10);    }
+        this.article = new Article('Angular 2', 'http://angular.io', 10);
+    }
 
-    voteUp(): boolean {
+    voteUp():boolean {
         this.article.voteUp();
         return false;
     }
 
-    voteDown(): boolean {
+    voteDown():boolean {
         this.article.voteDown();
         return false;
     }
@@ -102,8 +104,14 @@ class ArticleComponent {
 })
 
 class RedditApp {
+    articles:Article[];
 
     constructor() {
+        this.articles = [
+            new Article('Angular 2', 'http://angular.io', 3),
+            new Article('Fullstack', 'http://fullstack.io', 2),
+            new Article('Angular Homepage', 'http://angular.io', 1),
+        ];
     }
 
     addArticle(title:HTMLInputElement, link:HTMLInputElement):void {
